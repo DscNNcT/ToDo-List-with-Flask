@@ -1,0 +1,29 @@
+<!DOCTYPE html> 
+<title>
+    {% block title %}{% endblock%} - Todo List <!--Bloque de titulo.-->
+</title>
+<link rel="stylesheet" href="{{url_for('static', filename='style.css')}}"><!--Aquí incluimos nuestro archivo CSS-->
+<nav><!--Aquí escribiremos una estructura HTML con una pequeña interfaz de usuario-->
+    <h1>Todo List</h1>
+    <ul>
+        {% if g.user %}<!--Pregunto si dentro de la variable g existe user-->
+            <li><span>{{ g.user['username']}}</span></li><!--En caso de existir vamos a buscar el username-->
+            <li><a href="{{ url_for('auth.logout')}}">Cerrar Sesión</a></li><!--Le daremos un link para el cierre de sesión-->
+        {% else %}
+            <li><a href="{{ url_for('auth.register')}}">Registrarse</a></li><!--Link a la ruta de registro-->
+            <li><a href="{{ url_for('auth.login')}}">Iniciar Sesión</a></li><!-- Link a la ruta de inicio de sesión-->
+        {% endif %}
+    </ul>
+</nav>
+
+<!-- SECCIÓN PARA MENSAJES FLASH -->
+    <!-- Aquí desplegaremos los mensajes flash definidos en auth.py-->
+<section class="content">
+    <header>
+        {% block header %}{% endblock %}
+    </header>
+    {% for message in get_flashed_messages() %}
+    <div class="flash">{{ message }}</div>
+    {% endfor %}
+    {% block content %}{% endblock %}<!-- Bloque para desplegar contenido -->
+</section>

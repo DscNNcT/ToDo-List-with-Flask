@@ -1,0 +1,31 @@
+{% extends 'base.html' %} <!--Extendemos la plantilla desde base.html-->
+{% block header %}
+    <h1>{% block title %}ToDos{% endblock %}</h1>
+        {% if g.user %} <!--Si el usuario se encuentra correctamente-->
+            <a class="action" href="{{ url_for('todo.create') }}">Nuevo</a><!--Vamos a darle la opción de crear un nuevo todo (vamos a crear esta ruta mas adelante) -->
+        {% endif %}
+{% endblock %}
+
+{% block content %}
+<ul>
+    {% for todo in todos %}<!--Con esta iteración vamos a imprimir todos los ToDos del usuario-->
+    <li class="todo">
+        <div>
+            <h1>
+                {% if todo['completed'] == 1 %}<!--Si el ToDo se encuentra completado-->
+                <strike>{{ todo['description']}}</strike><!--Imprime el ToDo con una raya sobre el texto(para esto sirve strike).-->
+                {% else %}<!--Si no se encuentra completado-->
+                {{ todo['description'] }}<!--Se imprime solo el ToDo-->
+                {% endif %}
+            </h1>
+            <div class="about">{{ todo['created_at'].strftime('%Y-%m-%d') }}</div><!--Mostramos la fecha de creación del ToDo-->
+            <!--Generamos un botón para que el usuario pueda editar un ToDo. El id del ToDo a actualizar será otorgado a través de la plantilla-->
+            <a class="action" href="{{ url_for('todo.update', id=todo['id']) }}">Editar</a>
+        </div>
+    </li>
+    {% if not loop.last %}<!--Si el ToDo no es el último-->
+        <hr><!--Mostramos esta etiqueta de hr-->
+    {% endif %}
+    {% endfor %}
+</ul>
+{% endblock%}

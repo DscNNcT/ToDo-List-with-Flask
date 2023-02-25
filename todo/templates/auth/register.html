@@ -1,0 +1,14 @@
+{% extends 'base.html' %}<!--Extendemos la plantilla desde base.html-->
+{% block header %}
+    <h1>{% block title %}Registro{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <form method="post"><!--Agregamos un formulario para el registro-->
+        <label for="username">Username</label><!--Etiqueta para Username-->
+        <input name="username" id="username" required /><!--definimos el input como "name", pues es el nombre de la variable con la que recibimos datos en el backend de esta web app-->
+        <label for="password">Password</label><!--Etiqueta para Password-->
+        <input type="password" name="password" id="password" required /><!--importante que el input es tipo password para que nos muestre pelotitas negras en vez de la contraseña-->
+        <input type="submit" value="Registrarse" /><!--Boton para enviar el formulario de este endpoint de registro-->
+    </form>
+{% endblock %}
